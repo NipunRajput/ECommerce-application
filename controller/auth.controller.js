@@ -2,7 +2,7 @@
  * I need the to write the logic to register a user
  */
 const bcrypt=require('bcryptjs')
-const user_model=require("./models/user.models")
+const user_model=require("../models/user.models")
 exports.signup=async(req,res)=>{
     /**
      * logic to create the user
@@ -25,7 +25,15 @@ exports.signup=async(req,res)=>{
         /**
          * Return this user
          */
-        res.status(201).send(user_created)
+        const res_obj={
+            name:user_created.name,
+            userId:user_created.userId,
+            email:user_created.email,
+            userType:user_created.userType,
+            createdAt:user_created.createdAt,
+            updatedAt:user_created.updatedAt,
+        }
+        res.status(201).send(res_obj)
     }catch(err){
         console.log("Error while registering the user",err)
         res.status(500).send({

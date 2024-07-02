@@ -9,6 +9,7 @@ const server_config=require("./configs/server.config")
 const db_config=require('./configs/db.config')
 const user_model=require("./models/user.models")
 const bcrypt=require('bcryptjs')
+app.use(express.json())
 /**
  * Create an admin user at the starting of the application
  * if not already present
@@ -50,6 +51,14 @@ async function init(){
         console.log("Error while creating admin",err)
     }
 }
+
+
+/**
+ * Stich the route to server
+ */
+
+require("./routes/auth.routes")(app)
+
 
 app.listen(server_config.PORT, ()=>{
     console.log("Server has started at port num:",server_config.PORT)

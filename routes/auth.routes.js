@@ -3,8 +3,9 @@
  * I need to intercept this 
  */
 
-const authController=require('./controller/auth.controller')
+const userModel = require('../models/user.models');
+const authController=require('../controller/auth.controller')
 
 module.exports=(app)=>{
-    app.post("localhost:8888/ecomm/api/v1/auth/signup",authController.signup)
+    app.post("/ecomm/api/v1/auth/signup",authController.signup)
 }
