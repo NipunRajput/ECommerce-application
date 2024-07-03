@@ -35,4 +35,4 @@ const userSchema=new mongoose.Schema({
     }
 },{timestamps:true,versionKey:false})
 
-module.exports=mongoose.model("User",userSchema)//crating the the database in MongoDB
+module.exports=mongoose.model("User",userSchema)//creating the the database in MongoDB
