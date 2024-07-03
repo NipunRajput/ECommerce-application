@@ -3,6 +3,8 @@
  */
 const bcrypt=require('bcryptjs')
 const user_model=require("../models/user.models")
+const JWT=require("jsonwebtoken")
+const auth_config=require("../configs/auth.config")
 exports.signup=async(req,res)=>{
     /**
      * logic to create the user
@@ -42,4 +44,41 @@ exports.signup=async(req,res)=>{
     }
     //3.Return the response back to the user
 
+}
+
+
+
+
+
+exports.signin=async(req,res)=>{
+    // check if the user id is present in the system
+    const user=await user_model.findOne({userId:req.body.userId})
+
+    if(user==null){
+        res.status(400).send({
+            message:"User id passed is not a valid id"
+        })
+    }
+
+    // check if the password is correct
+    const ispasswordValid=bcrypt.compareSync(req.body.password,user.password)
+
+    if(!ispasswordValid){
+        res.status(401).send({
+            message:"Password entered is wrong, please try again!"
+        })
+    }
+
+    // using JWT generate a token with TTL(time to live) and return
+
+    const token=JWT.sign({id:user.userId},auth_config.secret,{
+        expiresIn:120
+    })
+    res.status(200).send({
+        name:user.name,
+        userId:user.userId,
+        email:user.email,
+        userType:user.userType,
+        accessToken:token
+    })
 }
