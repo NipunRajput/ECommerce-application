@@ -55,7 +55,7 @@ exports.signin=async(req,res)=>{
     const user=await user_model.findOne({userId:req.body.userId})
 
     if(user==null){
-        res.status(400).send({
+        return res.status(400).send({
             message:"User id passed is not a valid id"
         })
     }
@@ -64,7 +64,7 @@ exports.signin=async(req,res)=>{
     const ispasswordValid=bcrypt.compareSync(req.body.password,user.password)
 
     if(!ispasswordValid){
-        res.status(401).send({
+        return res.status(401).send({
             message:"Password entered is wrong, please try again!"
         })
     }
